@@ -1,0 +1,5 @@
+
+token.txt
+*.pyc
+__pycache__
+citizens.json
