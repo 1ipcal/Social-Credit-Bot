@@ -1,4 +1,12 @@
+# Name: Calvin Ip
+# Date: 01/07/2023
+# Version 1.1
+# Description: A Discord bot that uses the Chinese Social Credit Meme as its basis
+
 import json
+import discord
+
+STARTING_CREDITS = 1000
 
 
 def get_credits(user_id: int) -> int:
@@ -112,9 +120,24 @@ def make_user_data(user_id: int) -> bool:
     else:
         # Make a new user. Default starting with 1000
         dict[str(user_id)] = {}
-        dict[str(user_id)]["socialCredits"] = 1000
+        dict[str(user_id)]["socialCredits"] = STARTING_CREDITS
 
         with open("citizens.json", "w") as file:
             dict = json.dump(dict, file, indent=4)
 
         return True
+
+
+def has_role(list_roles: list[discord.Role], target_role: str) -> bool:
+    """
+    Adds the user to the json file. If the user exists, do nothing
+
+    :param list[discord.Role] list_role: the list of discord.Role that a memeber has
+    :param target_role: String name of the target role to be searched
+    :return: bool if the memeber has the target role in the guild
+    """
+    for role in list_roles:
+        if role.name.lower() == target_role.lower():
+            return True
+    
+    return False
